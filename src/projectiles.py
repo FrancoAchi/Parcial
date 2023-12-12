@@ -20,9 +20,12 @@ class Projectile(pygame.sprite.Sprite):
         return sprite_projectile.get_animation_dict()
 
     def update(self):
-        
         self.current_sprite = (self.current_sprite + 1) % len(self.animations["default"])
         self.image = self.animations["default"][self.current_sprite]
         self.mask = pygame.mask.from_surface(self.image)
+
+        # Invertir la imagen si el proyectil se mueve hacia la izquierda
+        if self.direction == -1:
+            self.image = pygame.transform.flip(self.image, True, False)
+
         self.rect.x += self.direction * self.speed
-        

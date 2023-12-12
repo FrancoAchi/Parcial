@@ -1,7 +1,6 @@
 import pygame
 from sprite_sheet import Sprites
 from import_path import load_path
-from projectiles import Projectile
 from config import STATIC_WIDTH, STATIC_HEIGHT
 
 class StaticEnemy(pygame.sprite.Sprite):
@@ -16,9 +15,6 @@ class StaticEnemy(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
         self.all_sprites_group = all_sprites_group
 
-        # Configuración de disparo
-        self.shoot_timer = 0
-        self.shoot_interval = 5000  # Intervalo en milisegundos (5 segundos)
 
     def load_enemy_animations(self):
         sprite_enemy = Sprites(load_path("enemy2.png"), 4, 2, STATIC_WIDTH, STATIC_HEIGHT, ["walk_right", "walk_left", "death_left", "death_right"])
@@ -31,17 +27,5 @@ class StaticEnemy(pygame.sprite.Sprite):
         self.image = self.animations[animation_key][self.current_sprite]
         self.mask = pygame.mask.from_surface(self.image)
 
-        # Actualizar temporizador de disparo
-        self.shoot_timer += pygame.time.get_ticks()
-
-        # Disparar un proyectil cada 5 segundos
-        if self.shoot_timer >= self.shoot_interval:
-            self.shoot()
-            self.shoot_timer = 0
-
-    def shoot(self):
-        projectile = Projectile(self.rect.centerx, self.rect.centery, self.direction)
-        # Añadir el proyectil al grupo de sprites
-       
-        self.all_sprites_group.add(projectile)
+      
 

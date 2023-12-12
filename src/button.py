@@ -2,7 +2,7 @@ import pygame
 
 
 
-def create_button(screen: pygame.surface, rect: pygame.Rect, text: str, normal_color: tuple, second_color: tuple) -> None:
+def create_button(screen: pygame.surface, rect: pygame.Rect, text: str, normal_color: tuple, second_color: tuple, border_color: tuple) -> None:
     """
     Crea un botón y lo muestra en la pantalla.
 
@@ -22,9 +22,10 @@ def create_button(screen: pygame.surface, rect: pygame.Rect, text: str, normal_c
 
         # Verificar si el mouse está sobre el botón y ajustar el color en consecuencia
         if rect.collidepoint(pos_mouse):
-            pygame.draw.rect(screen, second_color, rect, border_radius=30)
+            pygame.draw.rect(screen, second_color, rect)
+            pygame.draw.rect(screen, border_color, rect, 3)
         else:
-            pygame.draw.rect(screen, normal_color, rect, border_radius=30)
+            pygame.draw.rect(screen, normal_color, rect)
 
         # Mostrar el texto en el centro del botón
         show_text_button(screen, text, rect.centerx, rect.centery)

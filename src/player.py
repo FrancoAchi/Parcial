@@ -28,11 +28,15 @@ class Player(pygame.sprite.Sprite):
         self.animation_time = 70
         self.speed_v = 0
         self.is_jumping = False 
-        self.jump_speed = -13
+        self.jump_speed = -10
         self.is_second_jump = False
         self.is_jump_key_pressed = False
         self.projectiles = pygame.sprite.Group()
         self.shoot_key_pressed = False
+        self.shoot_key2_pressed = False
+        self.max_health = 3
+        self.current_health = self.max_health
+    
         #sonidos
         self.jump_sound = pygame.mixer.Sound(load_sound("jump.wav")) 
         self.shoot_sound = pygame.mixer.Sound(load_sound("player_shoot.wav"))
@@ -84,8 +88,13 @@ class Player(pygame.sprite.Sprite):
 
         if not keys[K_l]:
             self.shoot_key_pressed = False
-            
-        
+
+        if keys[K_k] and not self.shoot_key2_pressed:
+            self.shoot_projectile(-1)
+            self.shoot_key2_pressed = True
+
+        if not keys[K_k]:
+            self.shoot_key2_pressed = False
        
 
     def get_gravity(self) -> None:
@@ -116,9 +125,15 @@ class Player(pygame.sprite.Sprite):
             self.speed_v = self.jump_speed * 0.75  # Ajusta la velocidad del mini salto
             self.is_second_jump = True
 
+    def draw(self, surface):
+        pass
+
     def update(self) -> None:
         """
         Actualiza el jugador en cada fotograma del juego.
         """
         self.get_inputs()
         self.get_gravity()
+        
+        
+  
